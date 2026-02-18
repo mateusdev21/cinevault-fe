@@ -1,16 +1,37 @@
-import axios from "axios";
-import { useAuthStore } from "../../features/auth/store/auth.store";
+import axios from 'axios'
+import { env } from './env'
 
-export const api = axios.create({
-    baseURL: import.meta.env.VITE_API_URL,
-});
+const axiosInstance = axios.create({
+    baseURL: env.apiBaseUrl,
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    withCredentials: false,
+})
 
-api.interceptors.request.use((config) => {
-    const token = useAuthStore.getState().token;
+axiosInstance.interceptors.request.use(
+    (config) => {
+        const token = localStorage.getItem('token')
 
-    if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`
+        }
+
+        return config
+    },
+    (error) => Promise.reject(error)
+)
+
+axiosInstance.interceptors.response.use(
+    (response) => response,
+    (error) => {
+        if (error.response?.status === 401) {
+            localStorage.removeItem('token')
+            window.location.href = '/login'
+        }
+
+        return Promise.reject(error)
     }
+)
 
-    return config;
-});
+export default axiosInstance

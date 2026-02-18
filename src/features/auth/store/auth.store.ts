@@ -1,22 +1,31 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { create } from "zustand";
-
-type Role = "admin" | "customer";
+import { create } from 'zustand'
+import type { User } from '../types'
 
 interface AuthState {
-    user: {
-        id: number;
-        name: string;
-        role: Role;
-    } | null;
-    token: string | null;
-    setAuth: (user: any, token: string) => void;
-    logout: () => void;
+    user: User | null
+    token: string | null
+    isAuthenticated: boolean
+
+    setAuth: (user: User, token: string) => void
+    clearAuth: () => void
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
     user: null,
-    token: null,
-    setAuth: (user, token) => set({ user, token }),
-    logout: () => set({ user: null, token: null }),
-}));
+    token: localStorage.getItem('token'),
+    isAuthenticated: !!localStorage.getItem('token'),
+
+    setAuth: (user, token) =>
+        set({
+            user,
+            token,
+            isAuthenticated: true,
+        }),
+
+    clearAuth: () =>
+        set({
+            user: null,
+            token: null,
+            isAuthenticated: false,
+        }),
+}))
