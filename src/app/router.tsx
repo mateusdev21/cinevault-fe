@@ -3,7 +3,7 @@ import { createBrowserRouter } from "react-router-dom";
 import AuthLayout from "./layouts/AuthLayout";
 import DashboardLayout from "./layouts/DashboardLayout";
 
-import ProtectedRoute from "./routes/ProtectedRoute";
+import { ProtectedRoute } from "./routes/ProtectedRoute";
 import PublicRoute from "./routes/PublicRoute";
 
 import LoginPage from "../features/auth/pages/LoginPage";

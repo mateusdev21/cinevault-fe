@@ -1,20 +1,23 @@
-import { Navigate, Outlet } from "react-router-dom";
-import { useAuthStore } from "../../features/auth/store/auth.store";
+import { Navigate, Outlet } from "react-router-dom"
+import { useAuthStore } from "../../features/auth/store/auth.store"
 
-interface Props {
-    allowedRoles?: ("admin" | "customer")[];
+type ProtectedRouteProps = {
+  allowedRoles?: string[]
 }
 
-export default function ProtectedRoute({ allowedRoles }: Props) {
-    const { user } = useAuthStore();
+export const ProtectedRoute = ({ allowedRoles }: ProtectedRouteProps) => {
+  const { token, user } = useAuthStore()
 
-    if (!user) {
-        return <Navigate to="/login" replace />;
-    }
+  // 1️⃣ Belum login
+  if (!token || !user) {
+    return <Navigate to="/login" replace />
+  }
 
-    if (allowedRoles && !allowedRoles.includes(user.role)) {
-        return <Navigate to="/unauthorized" replace />;
-    }
+  // 2️⃣ Cek role jika ada aturan
+  if (allowedRoles && !allowedRoles.includes(user.role)) {
+    return <Navigate to="/unauthorized" replace />
+  }
 
-    return <Outlet />;
+  // 3️⃣ Lolos semua
+  return <Outlet />
 }
