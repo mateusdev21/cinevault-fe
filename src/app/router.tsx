@@ -5,6 +5,7 @@ import DashboardLayout from "./layouts/DashboardLayout";
 
 import { ProtectedRoute } from "./routes/ProtectedRoute";
 import PublicRoute from "./routes/PublicRoute";
+import { RootRedirect } from "./routes/RootRedirect";
 
 import LoginPage from "../features/auth/pages/LoginPage";
 import RegisterPage from "../features/auth/pages/RegisterPage";
@@ -18,6 +19,10 @@ import AdminDashboardPage from "../features/dashboard/pages/AdminDashboardPage";
 
 const router = createBrowserRouter([
     {
+        path: "/",
+        element: <RootRedirect />,
+    },
+    {
         element: <PublicRoute />,
         children: [
             {
@@ -29,14 +34,13 @@ const router = createBrowserRouter([
             },
         ],
     },
-
     {
         element: <ProtectedRoute allowedRoles={["admin"]} />,
         children: [
             {
                 element: <DashboardLayout />,
                 children: [
-                    { path: "/admin", element: <AdminDashboardPage /> },
+                    { path: "/admin/dashboard", element: <AdminDashboardPage /> },
                     { path: "/admin/dvds", element: <DvdManagementPage /> },
                     { path: "/admin/users", element: <UserManagementPage /> },
                 ],
@@ -45,12 +49,12 @@ const router = createBrowserRouter([
     },
 
     {
-        element: <ProtectedRoute allowedRoles={["customer","admin"]} />,
+        element: <ProtectedRoute allowedRoles={["customer", "admin"]} />,
         children: [
             {
                 element: <DashboardLayout />,
                 children: [
-                    { path: "/", element: <CustomerDashboardPage /> },
+                    { path: "/dashboard", element: <CustomerDashboardPage /> },
                     { path: "/dvds", element: <DvdListPage /> },
                     { path: "/my-rentals", element: <CustomerRentalPage /> },
                 ],
