@@ -14,8 +14,6 @@ export const authService = {
     async register(payload: RegisterPayload) {
         const response = await authApi.register(payload)
 
-        localStorage.setItem('token', response.data?.token)
-
         return response
     },
 

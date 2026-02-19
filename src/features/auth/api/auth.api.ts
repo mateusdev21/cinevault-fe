@@ -8,7 +8,7 @@ export const authApi = {
     },
 
     register: async (payload: RegisterPayload) => {
-        const { data } = await axiosInstance.post<AuthResponse>('/auth/register', payload)
+        const data = await axiosInstance.post<AuthResponse>('/auth/register', payload)        
         return data
     },
 
