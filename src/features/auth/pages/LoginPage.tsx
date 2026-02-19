@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { useLogin } from '../hooks/useLogin'
 import { getDefaultRouteByRole } from '../utils/roleRedirect'
 import { IoEyeOutline, IoEyeOffOutline } from 'react-icons/io5'
+import Button from '../../../shared/components/Button'
 
 const LoginPage = () => {
     const navigate = useNavigate()
@@ -96,13 +97,9 @@ const LoginPage = () => {
                     </a>
                 </div>
 
-                <button
-                    type="submit"
-                    disabled={loading}
-                    className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition disabled:opacity-50"
-                >
-                    {loading ? 'Loading...' : 'Login'}
-                </button>
+                <Button type="submit" loading={loading} disabled={loading} fullWidth className='rounded-md'>
+                    Login
+                </Button>
 
                 <div className='flex items-center text-center justify-center mt-2'>
                     <span className='text-xs text-gray-600'>Don't have an account?</span>
