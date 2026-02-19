@@ -15,8 +15,8 @@ export const Sidebar = () => {
     }
 
     return (
-        <aside className="w-56 h-screen bg-white flex flex-col px-2">
-            <div className="p-8 font-extrabold text-xl text-center">CineVault</div>
+        <aside className="w-56 h-screen bg-white flex flex-col shadow-lg px-2">
+            <div className="p-6 font-extrabold text-xl text-center">CineVault</div>
 
             <nav className="flex flex-col gap-1 px-2">
                 {menus.map((menu) => {
